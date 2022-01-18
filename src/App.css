@@ -1,3 +1,23 @@
+body {
+    background-color: rgba(42, 54, 59, 0.9);;
+    color: white;
+}
+.listHolder {
+    width: 50%;
+    margin: auto;
+}
+.listHolder ol {
+    list-style-position: inside;
+    padding:0;
+}
+.taskAdding textarea{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
 .App {
   text-align: center;
 }
@@ -14,7 +34,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: rgba(42, 54, 59, 0.9);;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
