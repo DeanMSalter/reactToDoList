@@ -22,31 +22,55 @@ function NoteEntry(props) {
             />
             <input className="btnTaskAdd" type="button" value="Add" onClick={() => {
                 props.addNote(task)
+                setTask("")
             }}/>
         </div>
     );
+}
+function Task(props){
+    return (
+        <li>
+            {props.task}
+        </li>
+
+    )
+}
+
+function TaskList(props) {
+    return(
+        <div className="TaskList">
+            <ol>
+                {props.tasks.map(task =>
+                    <>
+                        <Task task={task} removeTask={props.removeTask}/>
+                        <input
+                            type="button"
+                            value="Delete"
+                            onClick={() => {props.removeTask(props.task)}}
+                            placeholder="New Task.."
+                            required
+                        />
+                    </>
+                )}
+            </ol>
+        </div>
+        )
 }
 
 function App() {
   const [tasks, setTasks] = useState(staticTasks);
 
-  const updateTasks =  (task) => {
-      console.log("hereeee")
+  const addTask =  (task) => {
       setTasks(tasks.concat(task))
+  }
+  const removeTask = (task) => {
+      setTasks(tasks.filter(item => item !== task))
   }
 
   return (
     <div className="App">
-      <section>
-          <NoteEntry addNote={updateTasks}></NoteEntry>
-          <div class="listHolder">
-              <ol>
-                  {tasks.map(task =>
-                    <li>{task}</li>
-                  )}
-              </ol>
-          </div>
-      </section>
+        <NoteEntry addNote={addTask}/>
+        <TaskList tasks={tasks} removeTask={removeTask}/>
     </div>
   );
 }
