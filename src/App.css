@@ -27,13 +27,13 @@ body {
 .taskAdding *{
     display: inline;
 }
-.btnTaskAdd {
-    font-size: 1.5em;
-}
 .TaskList {
     text-align: center;
 }
 .TaskList {
     display: inline-block;
     text-align: justify;
+}
+.hidden {
+    display: none;
 }

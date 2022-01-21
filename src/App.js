@@ -36,20 +36,56 @@ function Task(props){
     )
 }
 
+function EditTask(props) {
+    const [newTask, setNewTask] = useState("");
+
+
+    return (
+        <>
+            <input
+                key={"btnEdit." + props.task}
+                type="button"
+                value="Edit"
+                onClick={() => {
+                    if (document.getElementById(props.task).className == "hidden") {
+                        document.getElementById(props.task).className = ""
+                    } else {
+                        document.getElementById(props.task).className = "hidden"
+                    }
+                }}
+                required
+            />
+            <div key={props.task} id={props.task} className="hidden">
+                <input type="text" value={newTask} onChange={event => setNewTask(event.target.value )}/>
+                <input type="button" value="Submit" onClick={() => {
+                    props.editTask(props.task, newTask)
+                    setNewTask("")
+                }}/>
+            </div>
+        </>
+
+    )
+}
+
 function TaskList(props) {
     return(
         <div className="TaskList">
             <ol>
+                {console.log(props.tasks)}
                 {props.tasks.map(task =>
                     <>
-                        <Task task={task} removeTask={props.removeTask}/>
+                        <Task key={"task." + task} task={task} removeTask={props.removeTask}/>
                         <input
+                            key={"delete." + task}
                             type="button"
                             value="Delete"
-                            onClick={() => {props.removeTask(props.task)}}
-                            placeholder="New Task.."
+                            onClick={() => {
+                                props.removeTask(task)
+                                console.log(task)
+                            }}
                             required
                         />
+                        <EditTask key={"edit." + task} task={task} editTask={props.editTask} />
                     </>
                 )}
             </ol>
@@ -66,11 +102,16 @@ function App() {
   const removeTask = (task) => {
       setTasks(tasks.filter(item => item !== task))
   }
+  const editTask = (task, newTask) => {
+      let newTasks = [...tasks]
+      newTasks[newTasks.indexOf(task)] = newTask
+      setTasks(newTasks)
+  }
 
   return (
     <div className="App">
         <NoteEntry addNote={addTask}/>
-        <TaskList tasks={tasks} removeTask={removeTask}/>
+        <TaskList tasks={tasks} removeTask={removeTask} editTask={editTask}/>
     </div>
   );
 }
